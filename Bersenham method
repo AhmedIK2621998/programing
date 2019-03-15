@@ -1,0 +1,67 @@
+ public void Bersenham(Point p1, Point p2)
+        {
+            
+            Bitmap b = new Bitmap(show.Width, show.Height);
+
+            int dx = p2.X - p1.X;
+            int dy = p2.Y - p1.Y;
+            int swaps = 0;
+            if (Math.Abs(dx) > Math.Abs(dy))
+            {
+
+                swap(dx, dy);
+                swaps = 1;
+            }
+
+            int p = 2 * dy - Math.Abs(dx);
+            //b.SetPixel(x, y, Color.Red);
+            int q = 1;
+            int v = 1;
+            if (p1.X > p2.X) q = -1;
+            if (p1.Y > p2.Y) v = -1;
+            int dx2 = Math.Abs(dx);
+            int dy2 = Math.Abs(dx);
+            int x = p1.X;
+            int y = p1.Y;
+            for (int i = 0; i < dx2; i++)
+            {
+
+
+                if (p >= 0)
+                {
+                    p = p + (2 * dy2 - 2 * dx2);
+                    y = y + v;
+                    x = x + q;
+                }
+                else
+                {
+                    if (swaps == 1) 
+                        y = y + v;
+                    else
+                        x = x + q;
+                    p = p + 2 * dy2;
+                }
+
+                b.SetPixel(Math.Abs(x), Math.Abs(y), Color.Red);
+            }
+
+            show.Image = b;
+        }
+
+        private void swap(int dx, int dy)
+        {
+            int temp = dx;
+            dx = dy;
+            dy = temp;
+        }
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Point p1 = new Point(int.Parse(p1x.Text), int.Parse(p1y.Text));
+            Point p2 = new Point(int.Parse(p2x.Text), int.Parse(p2y.Text));
+            Bersenham(p1, p2);
+        }
